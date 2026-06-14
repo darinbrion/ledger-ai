@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ledger AI turns transaction history into forecasts, behavioral signals, and clear financial explanations.">
+  <title>Ledger AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="brand-mark">L</span>
+        <span>Ledger AI</span>
+      </div>
+
+      <nav class="nav-list" aria-label="Primary navigation">
+        <button class="nav-item active" data-view="home">
+          <span class="nav-icon">⌂</span><span>Home</span>
+        </button>
+        <button class="nav-item" data-view="spending">
+          <span class="nav-icon">◫</span><span>Spending</span>
+        </button>
+        <button class="nav-item" data-view="forecasts">
+          <span class="nav-icon">⌁</span><span>Forecasts</span>
+        </button>
+        <button class="nav-item" data-view="signals">
+          <span class="nav-icon">◇</span><span>Signals</span>
+          <span class="nav-count" id="signal-count">4</span>
+        </button>
+        <button class="nav-item" data-view="timeline">
+          <span class="nav-icon">◷</span><span>Timeline</span>
+        </button>
+        <button class="nav-item" data-view="ask">
+          <span class="nav-icon">✦</span><span>Ask AI</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="data-status">
+          <span class="status-dot"></span>
+          <div>
+            <strong id="data-status-title">Synthetic demo data</strong>
+            <span id="data-status-copy">Safe for recruiter review</span>
+          </div>
+        </div>
+        <button class="text-button" id="open-import">Import transactions</button>
+        <button class="text-button danger-text" id="clear-local-data">Clear local data</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Open navigation">☰</button>
+        <div>
+          <p class="eyebrow" id="page-eyebrow">Financial overview</p>
+          <h1 id="page-title">Good morning, Darin.</h1>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-button" id="refresh-analysis" aria-label="Refresh analysis">↻</button>
+          <button class="primary-button" id="top-import">Import CSV</button>
+          <button class="avatar" aria-label="Profile">DB</button>
+        </div>
+      </header>
+
+      <section class="view active" id="view-home">
+        <div class="hero-grid">
+          <article class="hero-card">
+            <div class="card-label-row">
+              <span class="card-label">Financial trajectory</span>
+              <span class="trend-badge positive" id="health-change">Improving</span>
+            </div>
+            <div class="health-layout">
+              <div>
+                <p class="hero-kicker">Your finances are</p>
+                <h2 id="health-title">Stable, with room to grow.</h2>
+                <p class="hero-copy" id="health-copy">Income is outpacing spending, but convenience purchases are rising faster than your three-month baseline.</p>
+              </div>
+              <div class="health-score">
+                <svg viewBox="0 0 120 120" aria-label="Financial health score">
+                  <circle class="score-track" cx="60" cy="60" r="49"></circle>
+                  <circle class="score-progress" id="score-progress" cx="60" cy="60" r="49"></circle>
+                </svg>
+                <div><strong id="health-score">78</strong><span>/ 100</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="forecast-card">
+            <div class="card-label-row">
+              <span class="card-label">June forecast</span>
+              <span class="muted">80% confidence</span>
+            </div>
+            <p class="metric-label">Expected spending</p>
+            <h2 class="metric-value" id="month-forecast">$4,250</h2>
+            <div class="confidence-track">
+              <span class="confidence-range" id="confidence-range"></span>
+              <span class="confidence-point" id="confidence-point"></span>
+            </div>
+            <div class="range-labels">
+              <span id="forecast-low">$4,000</span>
+              <span id="forecast-high">$4,550</span>
+            </div>
+            <button class="inline-link" data-view-link="forecasts">Explore forecast <span>→</span></button>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">What changed</p>
+            <h2>Your financial brief</h2>
+          </div>
+          <span class="updated-label" id="last-updated">Updated just now</span>
+        </div>
+        <div class="insight-grid" id="home-insights"></div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Spending velocity</p>
+                <h3>This month vs. expected</h3>
+              </div>
+              <button class="subtle-button" data-view-link="spending">View details</button>
+            </div>
+            <div class="chart-wrap">
+              <div class="chart-tooltip" id="home-chart-tooltip"></div>
+              <svg class="line-chart" id="home-chart" viewBox="0 0 720 245" preserveAspectRatio="none"></svg>
+            </div>
+            <div class="chart-legend">
+              <span><i class="legend-dot actual"></i>Actual</span>
+              <span><i class="legend-dot expected"></i>Expected</span>
+            </div>
+          </section>
+
+          <section class="panel signal-preview">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Latest signals</p>
+                <h3>Patterns worth noticing</h3>
+              </div>
+              <button class="subtle-button" data-view-link="signals">View all</button>
+            </div>
+            <div id="signal-preview-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-spending">
+        <div class="summary-strip" id="spending-summary"></div>
+        <div class="content-grid spending-layout">
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Category intelligence</p>
+                <h3>Where your money is moving</h3>
+              </div>
+              <select class="period-select" id="spending-period">
+                <option value="30">Last 30 days</option>
+                <option value="90">Last 90 days</option>
+                <option value="180">Last 6 months</option>
+              </select>
+            </div>
+            <div class="category-list" id="category-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Merchant analysis</p>
+                <h3>Frequent and growing</h3>
+              </div>
+            </div>
+            <div class="merchant-list" id="merchant-list"></div>
+          </section>
+        </div>
+        <section class="panel transactions-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Transaction review</p>
+              <h3>AI-categorized activity</h3>
+            </div>
+            <div class="table-actions">
+              <input class="search-input" id="transaction-search" placeholder="Search transactions">
+              <select class="period-select" id="category-filter"><option value="all">All categories</option></select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Merchant</th><th>Category</th><th>Amount</th></tr></thead>
+              <tbody id="transaction-table"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="view-forecasts">
+        <div class="forecast-summary-grid" id="forecast-cards"></div>
+        <section class="panel large-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Financial trajectory</p>
+              <h3>Projected cash balance</h3>
+            </div>
+            <div class="segmented-control" id="forecast-horizon">
+              <button class="active" data-days="30">30D</button>
+              <button data-days="90">90D</button>
+              <button data-days="180">180D</button>
+            </div>
+          </div>
+          <div class="forecast-chart-wrap">
+            <svg class="line-chart forecast-line-chart" id="forecast-chart" viewBox="0 0 900 320" preserveAspectRatio="none"></svg>
+          </div>
+          <div class="forecast-explanation" id="forecast-explanation"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Category outlook</p>
+              <h3>Expected end-of-month spend</h3>
+            </div>
+          </div>
+          <div class="forecast-category-grid" id="forecast-category-grid"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-signals">
+        <div class="signals-intro">
+          <div>
+            <p class="eyebrow">Behavioral intelligence</p>
+            <h2>Your money is telling a story.</h2>
+            <p>Signals compare recent behavior with your longer-term baseline to surface changes you may not notice transaction by transaction.</p>
+          </div>
+          <div class="signal-score">
+            <span>Behavioral drift</span>
+            <strong id="drift-score">Moderate</strong>
+          </div>
+        </div>
+        <div class="signals-grid" id="signals-grid"></div>
+      </section>
+
+      <section class="view" id="view-timeline">
+        <div class="timeline-intro">
+          <p class="eyebrow">Financial narrative</p>
+          <h2>How your life shows up in your spending.</h2>
+          <p>Ledger AI groups unusual shifts into possible life events. These are observations, not certainties.</p>
+        </div>
+        <div class="timeline" id="timeline-list"></div>
+      </section>
+
+      <section class="view ask-view" id="view-ask">
+        <div class="ask-header">
+          <span class="analyst-mark">✦</span>
+          <p class="eyebrow">Ledger Analyst</p>
+          <h2>Ask about your financial behavior.</h2>
+          <p>Every answer is grounded in your imported transactions and current forecast.</p>
+        </div>
+        <div class="suggestion-row" id="question-suggestions">
+          <button>Why did I spend more this month?</button>
+          <button>Can I afford a trip next month?</button>
+          <button>Which categories are growing fastest?</button>
+        </div>
+        <div class="chat" id="chat-log">
+          <div class="chat-message assistant">
+            <span class="chat-avatar">✦</span>
+            <div>
+              <strong>Ledger Analyst</strong>
+              <p>I’m ready. Ask me what changed, what is driving a trend, or what your current trajectory suggests.</p>
+            </div>
+          </div>
+        </div>
+        <form class="ask-composer" id="ask-form">
+          <input id="ask-input" autocomplete="off" placeholder="Ask a question about your finances...">
+          <button type="submit" aria-label="Send question">↑</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="modal-backdrop" id="import-modal" role="dialog" aria-modal="true" aria-labelledby="import-title">
+    <div class="modal">
+      <button class="modal-close" id="close-import" aria-label="Close">×</button>
+      <p class="eyebrow">Transaction ingestion</p>
+      <h2 id="import-title">Import your financial history</h2>
+      <p class="modal-copy">Upload a CSV containing date, merchant or description, and amount. Ledger AI cleans, categorizes, and analyzes it locally in your browser.</p>
+      <label class="drop-zone" id="drop-zone">
+        <input type="file" id="csv-input" accept=".csv,text/csv">
+        <span class="upload-icon">↑</span>
+        <strong>Choose a CSV file</strong>
+        <span>or drag and drop it here</span>
+      </label>
+      <div class="privacy-note">
+        <span>✓</span>
+        <p><strong>Processed on this device.</strong> Your CSV is parsed in this browser and is not sent to Ledger AI, Vercel, or an external AI service.</p>
+      </div>
+      <label class="remember-option">
+        <input type="checkbox" id="remember-data">
+        <span>
+          <strong>Remember this CSV on this device</strong>
+          <small>Off by default. When enabled, transactions are stored in this browser's local storage until you clear them.</small>
+        </span>
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" id="download-sample">Download sample CSV</button>
+        <button class="primary-button" id="use-demo">Use demo data</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+backend/
+airflow/
+spark/
+data/
+README.md
+__pycache__/
+*.pyc
+*.csv
+*.parquet
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
