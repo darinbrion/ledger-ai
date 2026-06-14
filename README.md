@@ -2,11 +2,11 @@
 
 Ledger AI is a financial intelligence platform that transforms transaction history into forecasts, behavioral signals, and plain-language explanations.
 
-The project was built to demonstrate an end-to-end learning workflow across data engineering, machine learning, and product development. The hosted recruiter demo uses entirely synthetic transactions.
+The project was built to demonstrate an end-to-end learning workflow across data engineering, machine learning, and product development. The hosted demo uses entirely synthetic transactions.
 
-## Recruiter Demo
+## Demo
 
-The demo opens with six months of fake financial activity, allowing every workflow to be evaluated without uploading personal information.
+The demo opens with six months of *fake financial activity*, allowing every workflow to be demonstrated *without uploading personal information.*
 
 **Live demo:** https://ledger-ai-rosy.vercel.app
 
@@ -20,9 +20,9 @@ Key flows:
 - Ask dataset-grounded financial questions
 - Import a sample CSV and edit generated categories
 
-## What I Learned
+## Skills
 
-### 1. Data Engineering Skills
+### 1. Data Engineering 
 
 **Medallion architecture**
 
@@ -45,15 +45,15 @@ Key flows:
 - Preserved a lightweight pandas execution path so the MVP remains runnable on a laptop.
 - Documented the tradeoff between production-oriented infrastructure and personal-scale data.
 
-**Backend and data services**
+**Backend and Data Services**
 
 - Built typed FastAPI endpoints for categorization, analysis, forecasting, and financial questions.
 - Defined Pydantic request and response contracts.
 - Added API limits and CORS boundaries for the MVP.
 
-### 2. Machine Learning Skills
+### 2. Machine Learning 
 
-**Feature engineering**
+**Feature Engineering**
 
 - Derived spending velocity, category shares, recurring obligations, historical baselines, and monthly volatility.
 - Separated fixed expenses from variable spending to prevent rent and subscriptions from being incorrectly extrapolated.
@@ -109,7 +109,7 @@ Key flows:
 - Used observed product errors to improve date handling and forecasting logic.
 - Kept the demo dependency-free so recruiters can evaluate it immediately.
 
-## Current Features
+## Full List of Current Features
 
 - Local CSV ingestion
 - Intelligent merchant categorization
